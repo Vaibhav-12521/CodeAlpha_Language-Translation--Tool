@@ -4,7 +4,7 @@
 A sleek and interactive **multilingual translator web app** built with **Flask, Google Translate API (googletrans)**, and a modern **UI/UX**.  
 This project was developed as part of my **CodeAlpha Internship** to demonstrate web development, API integration, and frontend–backend communication.  
 
----
+
 
 ## 🚀 Features  
 
@@ -16,7 +16,6 @@ This project was developed as part of my **CodeAlpha Internship** to demonstrate
 - 🎨 **Modern Glassmorphism UI** with animated background & particles  
 - 📱 Fully **responsive design**  
 
----
 
 ## 🛠️ Tech Stack  
 
@@ -27,7 +26,6 @@ This project was developed as part of my **CodeAlpha Internship** to demonstrate
   - Bootstrap Icons, Font Awesome  
   - Custom Glassmorphism UI + Animated background  
 
----
 
 ## 📂 Project Structure  
 
