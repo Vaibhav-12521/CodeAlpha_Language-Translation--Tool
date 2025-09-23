@@ -83,23 +83,6 @@ googletrans==4.0.0-rc1
 
 ---
 
-## 🏅 Internship Info
-
-This project is part of my **CodeAlpha Internship (AI Domain)**, where I developed real-world projects demonstrating AI/ML and web integration skills.
-
-🔗 **Hashtags for LinkedIn Post:**
-`#CodeAlpha #Internship #Flask #Python #GoogleTranslate #WebDevelopment #AI #ML #Translator`
-
----
-
-## 📸 Screenshots
-
-> 🎨 UI Preview – Modern Glassmorphism with animated background
-
-![Alpha Translator UI](https://via.placeholder.com/800x400.png?text=Alpha+Translator+UI)
-
----
-
 ## 👨‍💻 Author
 
 **Vaibhav Singh**
