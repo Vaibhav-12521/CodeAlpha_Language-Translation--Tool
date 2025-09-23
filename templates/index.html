@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Alpha Translator</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0; padding: 0;
+      font-family: 'Poppins', sans-serif;
+    }
+    body {
+      background: linear-gradient(135deg, #151a37 0%, #1b264f 100%);
+      min-height: 100vh;
+      display: flex; justify-content: center; align-items: center;
+      padding: 24px 12px;
+      background: #000;
+    }
+    .container {
+      background: rgba(31, 41, 72, 0.75);
+      backdrop-filter: blur(18px);
+      width: 100%;
+      max-width: 720px;
+      border-radius: 18px;
+      padding: 36px 36px 40px 36px;
+      display: flex;
+      flex-direction: column;
+      user-select:none;
+      border: 1.2px solid rgba(134, 155, 255, 0.3);
+    }
+    h1 {
+      color: #82b1ff;
+      font-weight: 700;
+      font-size: 2.6rem;
+      text-align: center;
+      letter-spacing: 2px;
+      margin-bottom: 24px;
+      user-select:none;
+    }
+    .wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1.8px solid rgba(134, 155, 255, 0.36);
+      background: transparent;
+    }
+    textarea {
+      width: 50%;
+      min-width: 280px;
+      height: 220px;
+      border: none;
+      padding: 18px 24px;
+      background: rgba(41, 49, 79, 0.7);
+      color: #c7d3ff;
+      font-weight: 600;
+      font-size: 1.15rem;
+      resize: vertical;
+      outline-offset: 3px;
+      outline-color: #709aff66;
+      transition: background-color 0.3s ease;
+      font-family: 'Poppins', sans-serif;
+    }
+    textarea::placeholder {
+      color: #8ca0d1aa;
+    }
+    textarea:focus {
+      background: rgba(55, 69, 118, 0.82);
+      outline: 3px solid #5f7affaa;
+      outline-offset: 0;
+    }
+    .to-text {
+      pointer-events: none;
+      border-left: 1.5px solid rgba(134, 155, 255, 0.3);
+      background: rgba(37, 45, 76, 0.82);
+      font-weight: 700;
+      color: #a9c4ff;
+      user-select: text;
+    }
+    @media (max-width: 700px) {
+      .wrapper {
+        flex-direction: column;
+      }
+      textarea, .to-text {
+        width: 100% !important;
+        border-left: none !important;
+        height: 200px;
+      }
+    }
+    .controls {
+      margin-top: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(31,41,72,0.75);
+      padding: 16px 26px;
+      border-radius: 14px;
+      border: 1.5px solid rgba(134, 155, 255, 0.3);
+      flex-wrap: wrap;
+      user-select:none;
+      gap: 20px;
+    }
+    .row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex: 1;
+      min-width: 145px;
+    }
+    .row.from {
+      justify-content: flex-start;
+      border-right: 1.5px solid rgba(134, 155, 255, 0.3);
+      padding-right: 20px;
+    }
+    .row.to {
+      justify-content: flex-end;
+      padding-left: 20px;
+    }
+    @media (max-width: 680px) {
+      .row.from, .row.to {
+        border: none;
+        flex: 0 0 100%;
+        padding: 8px 0 4px 0;
+        justify-content: center !important;
+      }
+      .controls {
+        justify-content: center;
+        gap: 20px;
+      }
+    }
+    select {
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      color: #86a1ffcc;
+      font-size: 1.05rem;
+      font-weight: 700;
+      outline: none;
+      min-width: 110px;
+      user-select: none;
+      padding-left: 6px;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      transition: background-color 0.3s ease;
+    }
+    select:focus {
+      background: rgba(98, 127, 255, 0.2);
+      outline: none;
+      border-radius: 8px;
+    }
+    .icons {
+      display: flex;
+      gap: 14px;
+    }
+    .icons i {
+      cursor: pointer;
+      font-size: 21px;
+      padding: 10px;
+      border-radius: 50%;
+      color: #91b2ffcc;
+      background: rgba(0,0,50,0.3);
+      transition: color 0.22s ease, transform 0.22s ease;
+      user-select:none;
+      -webkit-user-drag:none;
+      -moz-user-drag:none;
+    }
+    .icons i:hover {
+      color: #a9c4ff;
+      transform: scale(1.25);
+    }
+    .icons i:active {
+      transform: scale(1);
+    }
+    .exchange {
+      font-size: 20px;
+      color: #91b2ffcc;
+      cursor: pointer;
+      margin: 0 8px;
+      user-select:none;
+      transition: transform 0.3s ease, color 0.3s ease;
+    }
+    .exchange:hover {
+      color: #c0d3ff;
+      transform: rotate(360deg) scale(1.25);
+    }
+    .exchange:active {
+      transform: rotate(0deg) scale(1);
+    }
+    button#translateBtn {
+      color: #ccd9ff;
+      background-color: #4a68ef;
+      border: none;
+      padding: 16px 0;
+      font-weight: 700;
+      font-size: 1.2rem;
+      border-radius: 9px;
+      cursor: pointer;
+      user-select:none;
+      transition: background-color 0.3s ease;
+    }
+    button#translateBtn:hover:not(:disabled) {
+      background-color: #3261e6;
+    }
+    button#translateBtn:disabled {
+      background-color: #7a8bd4;
+      cursor: default;
+    }
+
+
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(135deg, #0c0c0c 0%, #1a0033 25%, #000011 50%, #001122 75%, #000000 100%);
+            overflow: hidden;
+        }
+
+        .shapes-layer {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .shape {
+            position: absolute;
+            border: 2px solid rgba(0, 255, 255, 0.3);
+            background: rgba(0, 255, 255, 0.05);
+            animation-iteration-count: infinite;
+            animation-timing-function: ease-in-out;
+        }
+
+        .shape-1 {
+            width: 200px;
+            height: 200px;
+            top: 10%;
+            left: 80%;
+            border-radius: 50%;
+            animation: float1 8s infinite, glow 4s infinite;
+        }
+
+        .shape-2 {
+            width: 150px;
+            height: 150px;
+            top: 60%;
+            left: 10%;
+            transform: rotate(45deg);
+            animation: float2 6s infinite, rotate360 10s linear infinite;
+            border-color: rgba(255, 0, 150, 0.4);
+            background: rgba(255, 0, 150, 0.05);
+        }
+
+        .shape-3 {
+            width: 100px;
+            height: 100px;
+            top: 20%;
+            right: 20%;
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+            animation: float3 7s infinite, pulse 3s infinite;
+            border-color: rgba(0, 255, 0, 0.4);
+            background: rgba(0, 255, 0, 0.05);
+        }
+
+        .shape-4 {
+            width: 80px;
+            height: 300px;
+            top: 40%;
+            left: 50%;
+            border-radius: 40px;
+            animation: float4 9s infinite;
+            border-color: rgba(255, 255, 0, 0.3);
+            background: rgba(255, 255, 0, 0.05);
+        }
+
+        .shape-5 {
+            width: 250px;
+            height: 250px;
+            bottom: 20%;
+            right: 30%;
+            border-radius: 20px;
+            animation: float5 11s infinite;
+            border-color: rgba(150, 0, 255, 0.4);
+            background: rgba(150, 0, 255, 0.05);
+        }
+
+        .layer {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: radial-gradient(circle, rgba(0, 255, 255, 1) 0%, rgba(0, 255, 255, 0) 70%);
+            border-radius: 50%;
+            animation: particleMove linear infinite, twinkle 2s infinite;
+        }
+
+        .grid-overlay {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 3;
+            opacity: 0.1;
+            background-image: 
+                linear-gradient(rgba(0, 255, 255, 0.3) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 255, 0.3) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes float1 {
+            0%, 100% { transform: translateY(0px) translateX(0px); }
+            25% { transform: translateY(-20px) translateX(10px); }
+            50% { transform: translateY(-40px) translateX(-10px); }
+            75% { transform: translateY(-20px) translateX(5px); }
+        }
+
+        @keyframes float2 {
+            0%, 100% { transform: rotate(45deg) translateY(0px); }
+            33% { transform: rotate(45deg) translateY(-30px); }
+            66% { transform: rotate(45deg) translateY(15px); }
+        }
+
+        @keyframes float3 {
+            0%, 100% { transform: translateY(0px) scale(1); }
+            50% { transform: translateY(-25px) scale(1.1); }
+        }
+
+        @keyframes float4 {
+            0%, 100% { transform: translateY(0px) translateX(0px); }
+            50% { transform: translateY(-35px) translateX(20px); }
+        }
+
+        @keyframes float5 {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            25% { transform: translateY(-15px) rotate(5deg); }
+            50% { transform: translateY(-30px) rotate(-5deg); }
+            75% { transform: translateY(-10px) rotate(3deg); }
+        }
+
+        @keyframes rotate360 {
+            from { transform: rotate(45deg); }
+            to { transform: rotate(405deg); }
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(0, 255, 255, 0.3); }
+            50% { box-shadow: 0 0 40px rgba(0, 255, 255, 0.6), 0 0 60px rgba(0, 255, 255, 0.3); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.8; }
+        }
+
+        @keyframes particleMove {
+            from {
+                transform: translateY(100vh) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            to {
+                transform: translateY(-10vh) translateX(100px);
+                opacity: 0;
+            }
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        @keyframes gridMove {
+            from { transform: translate(0, 0); }
+            to { transform: translate(50px, 50px); }
+        }
+  </style>
+</head>
+<body>
+
+
+
+  <div class="animated-bg">
+        <div class="shapes-layer">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+            <div class="shape shape-4"></div>
+            <div class="shape shape-5"></div>
+        </div>
+        
+        <div class="layer" id="particles"></div>
+        
+        <div class="grid-overlay"></div>
+    </div>
+  <main class="container" role="main" aria-label="Alpha Translator">
+    <h1>Alpha Translator</h1>
+    <div class="wrapper">
+      <textarea spellcheck="false" class="from-text" placeholder="Enter Text To Translate....."></textarea>
+      <textarea spellcheck="false" readonly disabled class="to-text" placeholder="Translated Text Appear Here....."></textarea>
+    </div>
+    <ul class="controls">
+      <li class="row from" aria-label="Source language controls">
+        <div class="icons">
+          <i class="fas fa-volume-up" id="fromSpeak" title="Speak"></i>
+          <i class="fas fa-copy" id="fromCopy" title="Copy"></i>
+        </div>
+        <select id="fromLang" aria-label="Select source language"></select>
+      </li>
+      <li class="exchange" title="Swap languages" role="button" tabindex="0" aria-label="Swap languages">
+        <i class="fas fa-exchange-alt"></i>
+      </li>
+      <li class="row to">
+        <select id="toLang"></select>
+        <div class="icons">
+          <i class="fas fa-volume-up" id="toSpeak" title="Speak"></i>
+          <i class="fas fa-copy" id="toCopy" title="Copy"></i>
+        </div>
+      </li>
+    </ul>
+    <br>
+    <button id="translateBtn"><i class="bi bi-translate">Translate</i></button>
+  </main>
+
+  <script>
+    const fromTextArea = document.querySelector('.from-text');
+    const toTextArea = document.querySelector('.to-text');
+    const fromLangSelect = document.getElementById('fromLang');
+    const toLangSelect = document.getElementById('toLang');
+    const swapBtn = document.querySelector('.exchange');
+    const translateBtn = document.getElementById('translateBtn');
+    const fromSpeakBtn = document.getElementById('fromSpeak');
+    const fromCopyBtn = document.getElementById('fromCopy');
+    const toSpeakBtn = document.getElementById('toSpeak');
+    const toCopyBtn = document.getElementById('toCopy');
+
+    const languages = {
+      "auto": "Detect Language",
+      "en": "English",
+      "hi": "Hindi",
+      "ar": "Arabic",
+      "zh-CN": "Chinese (Simplified)",
+      "fr": "French",
+      "de": "German",
+      "es": "Spanish",
+      "ja": "Japanese",
+      "ru": "Russian",
+      "ko": "Korean",
+      "it": "Italian",
+      "ta": "Tamil"
+    };
+
+    for (const [code, name] of Object.entries(languages)) {
+      let optionFrom = document.createElement('option');
+      optionFrom.value = code;
+      optionFrom.textContent = name;
+      if (code === 'en') optionFrom.selected = true;
+      fromLangSelect.appendChild(optionFrom);
+
+      let optionTo = document.createElement('option');
+      optionTo.value = code;
+      optionTo.textContent = name;
+      if (code === 'hi') optionTo.selected = true;
+      toLangSelect.appendChild(optionTo);
+    }
+
+    swapBtn.addEventListener('click', () => {
+      [fromLangSelect.value, toLangSelect.value] = [toLangSelect.value, fromLangSelect.value];
+      [fromTextArea.value, toTextArea.value] = [toTextArea.value, fromTextArea.value];
+    });
+    fromCopyBtn.addEventListener('click', () => {
+      if (fromTextArea.value) {
+        navigator.clipboard.writeText(fromTextArea.value);
+        flashIcon(fromCopyBtn);
+      }
+    });
+
+    toCopyBtn.addEventListener('click', () => {
+      if (toTextArea.value) {
+        navigator.clipboard.writeText(toTextArea.value);
+        flashIcon(toCopyBtn);
+      }
+    });
+
+    function flashIcon(icon) {
+      const original = icon.innerHTML;
+      icon.innerHTML = '<span style="font-size:18px; color:#5a9fff;">✔</span>';
+      setTimeout(() => (icon.innerHTML = original), 1100);
+    }
+    fromSpeakBtn.addEventListener('click', () => {
+      if (fromTextArea.value) {
+        const utterance = new SpeechSynthesisUtterance(fromTextArea.value);
+        utterance.lang = fromLangSelect.value === 'auto' ? 'en' : fromLangSelect.value;
+        speechSynthesis.speak(utterance);
+      }
+    });
+    toSpeakBtn.addEventListener('click', () => {
+      if (toTextArea.value) {
+        const utterance = new SpeechSynthesisUtterance(toTextArea.value);
+        utterance.lang = toLangSelect.value;
+        speechSynthesis.speak(utterance);
+      }
+    });
+    translateBtn.addEventListener('click', async () => {
+      const text = fromTextArea.value.trim();
+      if (!text) return;
+      toTextArea.value = 'Translating...';
+      translateBtn.disabled = true;
+      try {
+        const res = await fetch('/translate', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            text: text,
+            src: fromLangSelect.value,
+            dest: toLangSelect.value,
+          }),
+        });
+        if (!res.ok) throw new Error("Network Error");
+        const data = await res.json();
+        if (data.error) toTextArea.value = 'Error: ' + data.error;
+        else toTextArea.value = data.translatedText || '';
+      } catch (e) {
+        toTextArea.value = 'Translation Failed.';
+        console.error(e);
+      } finally {
+        translateBtn.disabled = false;
+      }
+    });
+
+
+    function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const maxParticles = 30;
+
+            for (let i = 0; i < maxParticles; i++) {
+                setTimeout(() => {
+                    createParticle(particlesContainer);
+                }, Math.random() * 5000);
+            }
+        }
+
+        function createParticle(container) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            
+            const startX = Math.random() * window.innerWidth;
+            const duration = 8 + Math.random() * 12;
+            const delay = Math.random() * 2;
+            
+            const colors = [
+                'rgba(0, 255, 255, 0.8)',
+                'rgba(255, 0, 150, 0.8)',
+                'rgba(0, 255, 0, 0.8)',
+                'rgba(255, 255, 0, 0.8)',
+                'rgba(150, 0, 255, 0.8)'
+            ];
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            
+            particle.style.left = startX + 'px';
+            particle.style.animationDuration = duration + 's';
+            particle.style.animationDelay = delay + 's';
+            particle.style.background = `radial-gradient(circle, ${color} 0%, transparent 70%)`;
+            
+            container.appendChild(particle);
+
+            setTimeout(() => {
+                if (particle.parentNode) {
+                    particle.parentNode.removeChild(particle);
+                    createParticle(container);
+                }
+            }, (duration + delay) * 1000);
+        }
+        document.addEventListener('DOMContentLoaded', () => {
+            createParticles();
+        });
+  </script>
+</body>
+</html>
