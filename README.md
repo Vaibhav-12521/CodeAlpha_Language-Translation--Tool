@@ -1,4 +1,3 @@
-```markdown
 # 🌐 Alpha Translator  
 
 A sleek and interactive **multilingual translator web app** built with **Flask, Google Translate API (googletrans)**, and a modern **UI/UX**.  
@@ -26,23 +25,6 @@ This project was developed as part of my **CodeAlpha Internship** to demonstrate
   - Bootstrap Icons, Font Awesome  
   - Custom Glassmorphism UI + Animated background  
 
-
-## 📂 Project Structure  
-
-
-
-Alpha-Translator/
-│
-├── app.py                 # Flask backend
-├── templates/
-│   └── index.html         # Frontend UI
-├── static/
-│   └── (Optional: CSS/JS if separated)
-├── requirements.txt       # Dependencies
-└── README.md              # Project Documentation
-
-````
-
 ---
 
 ## ⚡ Installation & Usage  
@@ -51,7 +33,7 @@ Alpha-Translator/
    ```bash
    git clone https://github.com/your-username/alpha-translator.git
    cd alpha-translator
-````
+   ```
 
 2. **Create Virtual Environment (Optional but Recommended)**
 
@@ -124,10 +106,6 @@ This project is part of my **CodeAlpha Internship (AI Domain)**, where I develop
 🚀 Passionate about **AI/ML | Web Development | UI/UX | Blockchain | Cybersecurity**
 
 📌 GitHub: [Vaibhav-12521](https://github.com/Vaibhav-12521)
+
 📌 LinkedIn: [Vaibhav Singh](https://www.linkedin.com/in/vaibhav-singh-12521)
 
----
-
-```
-👉 Do you want me to also **draft the LinkedIn post** for this project (highlighting it as your CodeAlpha submission) so you can directly post with reach-boosting hashtags?
-```
