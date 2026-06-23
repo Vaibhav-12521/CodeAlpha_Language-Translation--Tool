@@ -81,6 +81,7 @@ googletrans==4.0.0-rc1
 * 💾 Save translation history for users
 * 🔑 Add authentication & personalization
 
+* 
 ---
 
 ## 👨‍💻 Author
